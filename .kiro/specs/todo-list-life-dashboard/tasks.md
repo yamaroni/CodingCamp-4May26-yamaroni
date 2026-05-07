@@ -39,7 +39,7 @@ Build the entire dashboard as three files: `index.html`, `css/style.css`, and `j
     - Add `<div id="links-container"></div>` as the links container
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7_
 
-- [-] 2. Create `css/style.css` — responsive layout, widget styles, and all visual states
+- [x] 2. Create `css/style.css` — responsive layout, widget styles, and all visual states
   - [x] 2.1 Write CSS reset, custom properties, and base typography
     - Create `css/style.css`
     - Add a minimal CSS reset (`*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }`)
@@ -64,20 +64,20 @@ Build the entire dashboard as three files: `index.html`, `css/style.css`, and `j
     - Style `#date-display` as a secondary subtitle
     - _Requirements: 1.1, 1.2_
 
-  - [-] 2.5 Style the Focus Timer widget
+  - [x] 2.5 Style the Focus Timer widget
     - Style `#timer-display` as a large monospace countdown display
     - Style `#timer-start`, `#timer-stop`, `#timer-reset` as clearly labelled buttons with hover and active states
     - Style `.timer-banner` as a full-width highlighted completion banner
     - Add `.hidden { display: none; }` utility class for toggling the banner
     - _Requirements: 2.6, 2.7_
 
-  - [ ] 2.6 Style the To-Do List widget
+  - [x] 2.6 Style the To-Do List widget
     - Style `#todo-input` and `#todo-add-btn` as an inline add-task row
     - Style `#todo-list li` items with flex layout: checkbox on the left, task text in the middle, edit and delete buttons on the right
     - Add `.completed` rule that applies `text-decoration: line-through` and reduced opacity to completed task text
     - _Requirements: 3.4, 3.5_
 
-  - [ ] 2.7 Style the Quick Links widget and error states
+  - [x] 2.7 Style the Quick Links widget and error states
     - Style `#link-label-input` and `#link-url-input` as a two-field add-link row with `#link-add-btn`
     - Style each link card in `#links-container` with an anchor button and a delete button side by side
     - Add `.error` rule that applies a red border or highlight to invalid input fields
@@ -86,8 +86,8 @@ Build the entire dashboard as three files: `index.html`, `css/style.css`, and `j
 - [ ] 3. Checkpoint — Verify HTML and CSS are correct before writing JavaScript
   - Open `index.html` in a browser and confirm all four widget shells render in a responsive grid with correct element IDs. Ensure no console errors. Ask the user if anything looks wrong before proceeding.
 
-- [~] 4. Create `js/app.js` — full IIFE with all widget logic
-  - [ ] 4.1 Set up the IIFE skeleton, state variables, and DOMContentLoaded initialisation
+- [-] 4. Create `js/app.js` — full IIFE with all widget logic
+  - [x] 4.1 Set up the IIFE skeleton, state variables, and DOMContentLoaded initialisation
     - Create `js/app.js`
     - Wrap all code in `(function () { ... })();`
     - Declare module-scoped state variables: `let tasks = [];`, `let links = [];`, `let timerSeconds = 1500;`, `let timerInterval = null;`
@@ -95,14 +95,14 @@ Build the entire dashboard as three files: `index.html`, `css/style.css`, and `j
     - Define an empty `function init() {}` that will be filled in subsequent tasks
     - _Requirements: 6.3, 6.4_
 
-  - [ ] 4.2 Implement localStorage persistence helpers: `loadTasks`, `saveTasks`, `loadLinks`, `saveLinks`
+  - [-] 4.2 Implement localStorage persistence helpers: `loadTasks`, `saveTasks`, `loadLinks`, `saveLinks`
     - Write `loadTasks()`: reads `tld_tasks` from `localStorage`, `JSON.parse`s it, returns the array; wraps everything in `try/catch` and returns `[]` on any error
     - Write `saveTasks(tasks)`: `JSON.stringify`s the array and writes it to `localStorage` key `tld_tasks`
     - Write `loadLinks()`: same pattern for `tld_links`
     - Write `saveLinks(links)`: same pattern for `tld_links`
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5_
 
-  - [ ] 4.3 Implement Greeting widget: `getGreetingMessage`, `updateGreeting`
+  - [-] 4.3 Implement Greeting widget: `getGreetingMessage`, `updateGreeting`
     - Write `getGreetingMessage(hour)`: pure function mapping hour 0–23 to one of four greeting strings ("Good Morning" 5–11, "Good Afternoon" 12–17, "Good Evening" 18–20, "Good Night" 21–4)
     - Write `updateGreeting()`: reads `new Date()`, formats `HH:MM` time string (zero-padded), formats human-readable date string (e.g., "Monday, 2 June 2025"), calls `getGreetingMessage`, writes all three values to `#greeting-text`, `#time-display`, `#date-display`
     - In `init()`, call `updateGreeting()` once and then `setInterval(updateGreeting, 1000)`
