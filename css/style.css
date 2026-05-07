@@ -1,0 +1,661 @@
+/* ==========================================================================
+   css/style.css — Todo List Life Dashboard
+   Covers subtasks 2.1 – 2.7
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   2.1  CSS Reset, Custom Properties, and Base Typography
+   Requirements: 7.3, 7.4
+   -------------------------------------------------------------------------- */
+
+/* Minimal CSS reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom properties */
+:root {
+  /* Colours */
+  --color-bg:           #0f1117;
+  --color-surface:      #1a1d27;
+  --color-surface-alt:  #22263a;
+  --color-border:       #2e3250;
+  --color-primary:      #6c8ef5;
+  --color-primary-dark: #4f6de0;
+  --color-danger:       #e05c5c;
+  --color-danger-dark:  #c04040;
+  --color-success:      #4caf7d;
+  --color-text:         #e2e6f0;
+  --color-text-muted:   #8892b0;
+  --color-text-faint:   #4a5270;
+  --color-error-bg:     rgba(224, 92, 92, 0.12);
+  --color-banner-bg:    #2a3a1a;
+  --color-banner-text:  #a8e063;
+
+  /* Spacing */
+  --space-xs:  0.25rem;
+  --space-sm:  0.5rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2rem;
+
+  /* Border radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+
+  /* Shadows */
+  --shadow-widget: 0 4px 24px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.3);
+  --shadow-btn:    0 2px 8px rgba(0, 0, 0, 0.3);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+
+  /* Fluid font sizes — clamp(min, preferred, max)
+     Scales smoothly from 320 px to 1920 px viewport width */
+  --fs-xs:   clamp(0.65rem,  0.6rem  + 0.25vw, 0.75rem);
+  --fs-sm:   clamp(0.75rem,  0.7rem  + 0.3vw,  0.875rem);
+  --fs-base: clamp(0.875rem, 0.8rem  + 0.4vw,  1rem);
+  --fs-md:   clamp(1rem,     0.9rem  + 0.5vw,  1.125rem);
+  --fs-lg:   clamp(1.125rem, 1rem    + 0.6vw,  1.375rem);
+  --fs-xl:   clamp(1.375rem, 1.1rem  + 1.4vw,  2rem);
+  --fs-2xl:  clamp(1.75rem,  1.2rem  + 2.8vw,  3.25rem);
+  --fs-3xl:  clamp(2.5rem,   1.5rem  + 5vw,    5rem);
+}
+
+/* Base typography and body */
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont,
+               'Helvetica Neue', Arial, sans-serif;
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --------------------------------------------------------------------------
+   2.2  Responsive CSS Grid Dashboard Layout
+   Requirements: 7.3, 7.4
+   -------------------------------------------------------------------------- */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  min-height: 100dvh;
+  align-content: start;
+}
+
+/* --------------------------------------------------------------------------
+   2.3  Widget Cards
+   Requirements: 7.3, 7.4
+   -------------------------------------------------------------------------- */
+
+.widget {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-widget);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   2.4  Greeting Widget Typography
+   Requirements: 1.1, 1.2
+   -------------------------------------------------------------------------- */
+
+#greeting-widget {
+  background: linear-gradient(
+    135deg,
+    var(--color-surface) 0%,
+    var(--color-surface-alt) 100%
+  );
+}
+
+#greeting-text {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+#time-display {
+  font-family: 'Courier New', 'Lucida Console', Courier, monospace;
+  font-size: var(--fs-3xl);
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+#date-display {
+  font-size: var(--fs-md);
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+/* --------------------------------------------------------------------------
+   2.5  Focus Timer Widget
+   Requirements: 2.6, 2.7
+   -------------------------------------------------------------------------- */
+
+#timer-widget {
+  background: linear-gradient(
+    135deg,
+    var(--color-surface) 0%,
+    #1e1a2e 100%
+  );
+}
+
+#timer-display {
+  font-family: 'Courier New', 'Lucida Console', Courier, monospace;
+  font-size: var(--fs-3xl);
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-align: center;
+}
+
+/* Timer button row */
+#timer-widget button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast),
+              transform var(--transition-fast),
+              box-shadow var(--transition-fast);
+  box-shadow: var(--shadow-btn);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+#timer-start {
+  background-color: var(--color-success);
+  color: #0a1a0f;
+}
+
+#timer-start:hover {
+  background-color: #5dc98e;
+  box-shadow: 0 4px 14px rgba(76, 175, 125, 0.4);
+}
+
+#timer-start:active {
+  transform: scale(0.97);
+  background-color: #3a9e65;
+}
+
+#timer-stop {
+  background-color: var(--color-primary);
+  color: #0a0f2a;
+}
+
+#timer-stop:hover {
+  background-color: #8aaaf8;
+  box-shadow: 0 4px 14px rgba(108, 142, 245, 0.4);
+}
+
+#timer-stop:active {
+  transform: scale(0.97);
+  background-color: var(--color-primary-dark);
+}
+
+#timer-reset {
+  background-color: var(--color-surface-alt);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+#timer-reset:hover {
+  background-color: var(--color-border);
+  color: var(--color-text);
+}
+
+#timer-reset:active {
+  transform: scale(0.97);
+}
+
+/* Completion banner */
+.timer-banner {
+  width: 100%;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-banner-bg);
+  color: var(--color-banner-text);
+  border: 1px solid rgba(168, 224, 99, 0.3);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+/* Utility: hide elements */
+.hidden {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   2.6  To-Do List Widget
+   Requirements: 3.4, 3.5
+   -------------------------------------------------------------------------- */
+
+#todo-widget {
+  background: linear-gradient(
+    135deg,
+    var(--color-surface) 0%,
+    #1a2230 100%
+  );
+}
+
+/* Add-task row */
+#todo-widget > :not(ul) {
+  /* inputs and add button sit in a flex row */
+}
+
+#todo-input {
+  flex: 1;
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--fs-base);
+  font-family: inherit;
+  background-color: var(--color-surface-alt);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color var(--transition-fast),
+              box-shadow var(--transition-fast);
+  width: 100%;
+}
+
+#todo-input::placeholder {
+  color: var(--color-text-faint);
+}
+
+#todo-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(108, 142, 245, 0.2);
+}
+
+#todo-add-btn {
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  font-family: inherit;
+  background-color: var(--color-primary);
+  color: #0a0f2a;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast),
+              transform var(--transition-fast);
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+#todo-add-btn:hover {
+  background-color: #8aaaf8;
+}
+
+#todo-add-btn:active {
+  transform: scale(0.97);
+  background-color: var(--color-primary-dark);
+}
+
+/* Task list */
+#todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  max-height: 320px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+#todo-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+#todo-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#todo-list::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 2px;
+}
+
+/* Individual task item */
+#todo-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-fast);
+}
+
+#todo-list li:hover {
+  border-color: var(--color-primary);
+}
+
+/* Checkbox — left */
+#todo-list li input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 1.1em;
+  height: 1.1em;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+/* Task text — middle */
+#todo-list li span {
+  flex: 1;
+  font-size: var(--fs-base);
+  color: var(--color-text);
+  word-break: break-word;
+  min-width: 0;
+}
+
+/* Inline edit input */
+#todo-list li input[type="text"] {
+  flex: 1;
+  padding: 0.15em var(--space-sm);
+  font-size: var(--fs-base);
+  font-family: inherit;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  outline: none;
+  min-width: 0;
+}
+
+/* Edit and delete buttons — right */
+#todo-list li button {
+  flex-shrink: 0;
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--fs-xs);
+  font-family: inherit;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              transform var(--transition-fast);
+  letter-spacing: 0.02em;
+}
+
+/* Edit button */
+#todo-list li button:first-of-type {
+  background-color: transparent;
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+#todo-list li button:first-of-type:hover {
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Delete button */
+#todo-list li button:last-of-type {
+  background-color: transparent;
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+#todo-list li button:last-of-type:hover {
+  background-color: rgba(224, 92, 92, 0.12);
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+#todo-list li button:active {
+  transform: scale(0.95);
+}
+
+/* Completed task visual distinction */
+#todo-list li.completed span {
+  text-decoration: line-through;
+  opacity: 0.45;
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   2.7  Quick Links Widget and Error States
+   Requirements: 4.1, 4.3, 4.4, 4.5
+   -------------------------------------------------------------------------- */
+
+#links-widget {
+  background: linear-gradient(
+    135deg,
+    var(--color-surface) 0%,
+    #1a2a1e 100%
+  );
+}
+
+/* Add-link inputs */
+#link-label-input,
+#link-url-input {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--fs-base);
+  font-family: inherit;
+  background-color: var(--color-surface-alt);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  width: 100%;
+  transition: border-color var(--transition-fast),
+              box-shadow var(--transition-fast);
+}
+
+#link-label-input::placeholder,
+#link-url-input::placeholder {
+  color: var(--color-text-faint);
+}
+
+#link-label-input:focus,
+#link-url-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(108, 142, 245, 0.2);
+}
+
+/* Add link button */
+#link-add-btn {
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  font-family: inherit;
+  background-color: var(--color-success);
+  color: #0a1a0f;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast),
+              transform var(--transition-fast);
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+#link-add-btn:hover {
+  background-color: #5dc98e;
+}
+
+#link-add-btn:active {
+  transform: scale(0.97);
+  background-color: #3a9e65;
+}
+
+/* Links container */
+#links-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  max-height: 280px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+#links-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+#links-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#links-container::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 2px;
+}
+
+/* Individual link card */
+#links-container > div {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-fast);
+}
+
+#links-container > div:hover {
+  border-color: var(--color-success);
+}
+
+/* Anchor / shortcut button */
+#links-container a,
+#links-container button:first-of-type {
+  flex: 1;
+  font-size: var(--fs-base);
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--color-primary);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color var(--transition-fast);
+}
+
+#links-container a:hover,
+#links-container button:first-of-type:hover {
+  color: #8aaaf8;
+  text-decoration: underline;
+}
+
+/* Delete button for links */
+#links-container > div button:last-of-type {
+  flex-shrink: 0;
+  padding: var(--space-xs) var(--space-sm);
+  font-size: var(--fs-xs);
+  font-family: inherit;
+  font-weight: 600;
+  background-color: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast),
+              border-color var(--transition-fast),
+              color var(--transition-fast),
+              transform var(--transition-fast);
+  letter-spacing: 0.02em;
+}
+
+#links-container > div button:last-of-type:hover {
+  background-color: rgba(224, 92, 92, 0.12);
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+#links-container > div button:last-of-type:active {
+  transform: scale(0.95);
+}
+
+/* Error state — invalid input fields */
+.error {
+  border-color: var(--color-danger) !important;
+  background-color: var(--color-error-bg) !important;
+  box-shadow: 0 0 0 3px rgba(224, 92, 92, 0.2) !important;
+}
+
+/* --------------------------------------------------------------------------
+   Shared form element baseline
+   -------------------------------------------------------------------------- */
+
+input[type="text"],
+input[type="url"] {
+  /* Ensure consistent appearance across browsers */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive adjustments
+   -------------------------------------------------------------------------- */
+
+/* Narrow viewports: tighten widget padding */
+@media (max-width: 400px) {
+  .widget {
+    padding: var(--space-lg);
+  }
+
+  #time-display {
+    font-size: clamp(2rem, 10vw, 3.5rem);
+  }
+
+  #timer-display {
+    font-size: clamp(2rem, 10vw, 3.5rem);
+  }
+}
+
+/* Wide viewports: cap grid to a comfortable reading width */
+@media (min-width: 1600px) {
+  .dashboard-grid {
+    max-width: 1400px;
+    margin-inline: auto;
+  }
+}
