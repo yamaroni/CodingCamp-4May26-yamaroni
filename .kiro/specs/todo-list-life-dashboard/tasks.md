@@ -86,7 +86,7 @@ Build the entire dashboard as three files: `index.html`, `css/style.css`, and `j
 - [ ] 3. Checkpoint — Verify HTML and CSS are correct before writing JavaScript
   - Open `index.html` in a browser and confirm all four widget shells render in a responsive grid with correct element IDs. Ensure no console errors. Ask the user if anything looks wrong before proceeding.
 
-- [-] 4. Create `js/app.js` — full IIFE with all widget logic
+- [x] 4. Create `js/app.js` — full IIFE with all widget logic
   - [x] 4.1 Set up the IIFE skeleton, state variables, and DOMContentLoaded initialisation
     - Create `js/app.js`
     - Wrap all code in `(function () { ... })();`
@@ -95,20 +95,20 @@ Build the entire dashboard as three files: `index.html`, `css/style.css`, and `j
     - Define an empty `function init() {}` that will be filled in subsequent tasks
     - _Requirements: 6.3, 6.4_
 
-  - [-] 4.2 Implement localStorage persistence helpers: `loadTasks`, `saveTasks`, `loadLinks`, `saveLinks`
+  - [x] 4.2 Implement localStorage persistence helpers: `loadTasks`, `saveTasks`, `loadLinks`, `saveLinks`
     - Write `loadTasks()`: reads `tld_tasks` from `localStorage`, `JSON.parse`s it, returns the array; wraps everything in `try/catch` and returns `[]` on any error
     - Write `saveTasks(tasks)`: `JSON.stringify`s the array and writes it to `localStorage` key `tld_tasks`
     - Write `loadLinks()`: same pattern for `tld_links`
     - Write `saveLinks(links)`: same pattern for `tld_links`
     - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5_
 
-  - [-] 4.3 Implement Greeting widget: `getGreetingMessage`, `updateGreeting`
+  - [x] 4.3 Implement Greeting widget: `getGreetingMessage`, `updateGreeting`
     - Write `getGreetingMessage(hour)`: pure function mapping hour 0–23 to one of four greeting strings ("Good Morning" 5–11, "Good Afternoon" 12–17, "Good Evening" 18–20, "Good Night" 21–4)
     - Write `updateGreeting()`: reads `new Date()`, formats `HH:MM` time string (zero-padded), formats human-readable date string (e.g., "Monday, 2 June 2025"), calls `getGreetingMessage`, writes all three values to `#greeting-text`, `#time-display`, `#date-display`
     - In `init()`, call `updateGreeting()` once and then `setInterval(updateGreeting, 1000)`
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7_
 
-  - [ ] 4.4 Implement Focus Timer: `renderTimer`, `initTimer`, `startTimer`, `tickTimer`, `stopTimer`, `resetTimer`, `timerComplete`
+  - [x] 4.4 Implement Focus Timer: `renderTimer`, `initTimer`, `startTimer`, `tickTimer`, `stopTimer`, `resetTimer`, `timerComplete`
     - Write `renderTimer()`: formats `timerSeconds` as `MM:SS` (zero-padded), writes to `#timer-display`
     - Write `initTimer()`: sets `timerSeconds = 1500`, clears any existing interval, calls `renderTimer()`
     - Write `startTimer()`: guard — if `timerInterval !== null`, return immediately; otherwise create a 1-second interval that calls `tickTimer()`
@@ -119,7 +119,7 @@ Build the entire dashboard as three files: `index.html`, `css/style.css`, and `j
     - In `init()`, call `initTimer()` and attach click listeners on `#timer-start`, `#timer-stop`, `#timer-reset` to `startTimer`, `stopTimer`, `resetTimer`
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8_
 
-  - [ ] 4.5 Implement To-Do List rendering: `renderTasks`
+  - [x] 4.5 Implement To-Do List rendering: `renderTasks`
     - Write `renderTasks()`: clears `#todo-list` innerHTML; for each task in `tasks[]`, creates a `<li>` containing:
       - `<input type="checkbox">` checked if `task.completed`, with a `change` listener calling `toggleTask(task.id)`
       - A `<span>` with task text, with `.completed` class applied when `task.completed === true`
@@ -128,7 +128,7 @@ Build the entire dashboard as three files: `index.html`, `css/style.css`, and `j
     - Appends each `<li>` to `#todo-list`
     - _Requirements: 3.4, 3.5, 3.6_
 
-  - [ ] 4.6 Implement To-Do List mutations: `addTask`, `toggleTask`, `editTask`, `deleteTask`
+  - [x] 4.6 Implement To-Do List mutations: `addTask`, `toggleTask`, `editTask`, `deleteTask`
     - Write `addTask(text)`: trims text; if empty, focuses `#todo-input` and returns; pushes `{ id: Date.now(), text: trimmed, completed: false }` to `tasks[]`; calls `saveTasks(tasks)` and `renderTasks()`; clears `#todo-input`
     - Write `toggleTask(id)`: finds task by id, flips `completed`; calls `saveTasks(tasks)` and `renderTasks()`
     - Write `editTask(id, newText)`: trims `newText`; if empty, calls `renderTasks()` (restores original) and returns; updates `task.text`; calls `saveTasks(tasks)` and `renderTasks()`
@@ -136,14 +136,14 @@ Build the entire dashboard as three files: `index.html`, `css/style.css`, and `j
     - In `init()`, set `tasks = loadTasks()`, call `renderTasks()`, attach a `click` listener on `#todo-add-btn` calling `addTask(#todo-input.value)`, and attach a `keydown` listener on `#todo-input` to submit on Enter
     - _Requirements: 3.1, 3.2, 3.3, 3.5, 3.7, 3.8, 3.9, 3.10_
 
-  - [ ] 4.7 Implement Quick Links rendering: `renderLinks`
+  - [x] 4.7 Implement Quick Links rendering: `renderLinks`
     - Write `renderLinks()`: clears `#links-container` innerHTML; for each link in `links[]`, creates a `<div class="link-card">` containing:
       - An `<a href="link.url" target="_blank" rel="noopener noreferrer">` with `link.label` as text
       - A delete `<button>` with a `click` listener calling `deleteLink(link.id)`
     - Appends each card to `#links-container`
     - _Requirements: 4.4, 4.5_
 
-  - [ ] 4.8 Implement Quick Links mutations: `addLink`, `deleteLink`
+  - [x] 4.8 Implement Quick Links mutations: `addLink`, `deleteLink`
     - Write `addLink(label, url)`: trims both inputs; if label is empty, adds `.error` class to `#link-label-input` and returns; if url is empty, adds `.error` class to `#link-url-input` and returns; removes `.error` from both fields; pushes `{ id: Date.now(), label, url }` to `links[]`; calls `saveLinks(links)` and `renderLinks()`; clears both input fields
     - Write `deleteLink(id)`: filters `links[]` to remove matching id; calls `saveLinks(links)` and `renderLinks()`
     - In `init()`, set `links = loadLinks()`, call `renderLinks()`, attach a `click` listener on `#link-add-btn` calling `addLink(#link-label-input.value, #link-url-input.value)`, and attach a `keydown` listener on `#link-url-input` to submit on Enter
